@@ -8,43 +8,43 @@ namespace loan_optimizer
             new List<Loan> {
                 new Loan
                 {
-                    OriginalBalance = 1486.37f,
-                    InterestRate = 0.05f
-                },
-                new Loan
-                {
-                    OriginalBalance = 1000,
-                    InterestRate = 0.15f
-                },
-                new Loan
-                {
-                    OriginalBalance = 10000,
+                    OriginalBalance = 1500,
                     InterestRate = 0.04f
                 },
                 new Loan
                 {
+                    OriginalBalance = 2500,
+                    InterestRate = 0.03f
+                },
+                new Loan
+                {
+                    OriginalBalance = 9000,
+                    InterestRate = 0.035f
+                },
+                new Loan
+                {
+                    OriginalBalance = 6000,
+                    InterestRate = 0.043f
+                },
+                new Loan
+                {
+                    OriginalBalance = 3000,
+                    InterestRate = 0.027f
+                },
+                new Loan
+                {
+                    OriginalBalance = 2000,
+                    InterestRate = 0.032f
+                },
+                new Loan
+                {
+                    OriginalBalance = 5000,
+                    InterestRate = 0.035f
+                },
+                new Loan
+                {
                     OriginalBalance = 1000,
-                    InterestRate = 0.1f
-                },
-                new Loan
-                {
-                    OriginalBalance = 1486.37f,
-                    InterestRate = 0.05f
-                },
-                new Loan
-                {
-                    OriginalBalance = 100000,
-                    InterestRate = 0.14f
-                },
-                new Loan
-                {
-                    OriginalBalance = 10000,
-                    InterestRate = 0.04f
-                },
-                new Loan
-                {
-                    OriginalBalance = 1000,
-                    InterestRate = 0.1f
+                    InterestRate = 0.03f
                 }
             };
     }

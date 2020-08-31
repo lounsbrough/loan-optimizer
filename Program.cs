@@ -5,7 +5,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
 
     class Program
     {
@@ -15,18 +14,23 @@
             ConfigureServices(serviceCollection);
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<Program>>();
 
             const float availablePayment = 200;
 
             var loanOptimizer = serviceProvider.GetService<LoanOptimizer>();
+            var loanAmortizer = serviceProvider.GetService<ILoanAmortizer>();
 
             var optimizedLoans = Task.Run(() => loanOptimizer.OptimizeLoansAsync(LoanDefinitions.Loans, availablePayment)).Result;
 
-            var logger = serviceProvider.GetService<ILogger<Program>>();
+            var deoptimizedLoans = loanOptimizer.ShallowCopy(optimizedLoans);
+            deoptimizedLoans.Reverse();
+
+            deoptimizedLoans = Task.Run(() => loanAmortizer.CalculateAmortization(deoptimizedLoans, availablePayment)).Result;
 
             logger.LogInformation(JsonConvert.SerializeObject(optimizedLoans, Formatting.Indented));
-
-            logger.LogInformation($"Total Payments: {optimizedLoans.Sum(loan => loan.TotalPayments)}");
+            logger.LogInformation($"Total payments after optimization: {optimizedLoans.Sum(loan => loan.TotalPayments)}");
+            logger.LogInformation($"Total payments in the worst configuration: {deoptimizedLoans.Sum(loan => loan.TotalPayments)}");
         }
 
         private static void ConfigureServices(IServiceCollection serviceCollection)

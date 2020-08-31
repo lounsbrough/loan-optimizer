@@ -83,7 +83,7 @@ namespace loan_optimizer
             _loans = totalPayments1 < totalPayments2 ? ShallowCopy(loans1) : ShallowCopy(loans2);
         }
 
-        private T ShallowCopy<T>(T item)
+        public T ShallowCopy<T>(T item)
         {
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(item));
         }
