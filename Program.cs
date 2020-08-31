@@ -1,5 +1,6 @@
 ﻿namespace loan_optimizer
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -24,6 +25,8 @@
             var logger = serviceProvider.GetService<ILogger<Program>>();
 
             logger.LogInformation(JsonConvert.SerializeObject(optimizedLoans, Formatting.Indented));
+
+            logger.LogInformation($"Total Payments: {optimizedLoans.Sum(loan => loan.TotalPayments)}");
         }
 
         private static void ConfigureServices(IServiceCollection serviceCollection)

@@ -14,7 +14,27 @@ namespace loan_optimizer
                 new Loan
                 {
                     OriginalBalance = 1000,
+                    InterestRate = 0.15f
+                },
+                new Loan
+                {
+                    OriginalBalance = 10000,
+                    InterestRate = 0.04f
+                },
+                new Loan
+                {
+                    OriginalBalance = 1000,
                     InterestRate = 0.1f
+                },
+                new Loan
+                {
+                    OriginalBalance = 1486.37f,
+                    InterestRate = 0.05f
+                },
+                new Loan
+                {
+                    OriginalBalance = 100000,
+                    InterestRate = 0.14f
                 },
                 new Loan
                 {
