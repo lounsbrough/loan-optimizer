@@ -27,28 +27,43 @@ namespace loan_optimizer
             foreach (var loan in loans)
             {
                 loan.RemainingBalance = loan.OriginalBalance;
+                loan.UnpaidInterest = 0;
                 loan.TotalPayments = 0;
                 loan.TotalPrincipal = 0;
                 loan.TotalInterest = 0;
+                loan.MonthsToComplete = 0;
             }
 
             while (loans.Any(loan => loan.RemainingBalance > 0))
             {
                 var remainingAvailable = availablePayment;
 
-                foreach (var loan in loans)
+                foreach (var loan in loans.Where(loan => loan.RemainingBalance > 0))
                 {
+                    loan.MonthsToComplete++;
+
                     var interestAccrued = loan.RemainingBalance * loan.InterestRate / 12;
-                    var payoffAmount = loan.RemainingBalance + interestAccrued;
-                    var principal = 0f;
-                    var interest = 0f;
+                    loan.UnpaidInterest += interestAccrued;
+                    var payoffAmount = loan.RemainingBalance + loan.UnpaidInterest;
+
+                    float principal;
+                    float interest;
 
                     if (remainingAvailable < payoffAmount)
                     {
-                        loan.RemainingBalance -= remainingAvailable - interestAccrued;
-                        
-                        interest = Math.Min(remainingAvailable, interestAccrued);
-                        principal = remainingAvailable - interest;
+                        if (remainingAvailable < loan.UnpaidInterest)
+                        {
+                            interest = remainingAvailable;
+                            principal = 0;
+                            loan.UnpaidInterest -= remainingAvailable;
+                        }
+                        else
+                        {
+                            interest = Math.Min(remainingAvailable, loan.UnpaidInterest);
+                            principal = remainingAvailable - loan.UnpaidInterest;
+                            loan.RemainingBalance -= remainingAvailable - loan.UnpaidInterest;
+                            loan.UnpaidInterest = 0;
+                        }
 
                         remainingAvailable = 0;
                     }
@@ -56,9 +71,10 @@ namespace loan_optimizer
                     {
                         remainingAvailable -= payoffAmount;
                         
-                        interest = interestAccrued;
+                        interest = loan.UnpaidInterest;
                         principal = loan.RemainingBalance;
 
+                        loan.UnpaidInterest = 0;
                         loan.RemainingBalance = 0;
                     }
 

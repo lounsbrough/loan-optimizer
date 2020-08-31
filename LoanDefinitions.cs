@@ -8,7 +8,7 @@ namespace loan_optimizer
             new List<Loan> {
                 new Loan
                 {
-                    OriginalBalance = 10000,
+                    OriginalBalance = 1486.37f,
                     InterestRate = 0.05f
                 },
                 new Loan
@@ -19,7 +19,7 @@ namespace loan_optimizer
                 new Loan
                 {
                     OriginalBalance = 10000,
-                    InterestRate = 0.05f
+                    InterestRate = 0.04f
                 },
                 new Loan
                 {

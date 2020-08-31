@@ -75,7 +75,12 @@ namespace loan_optimizer
             _logger.LogDebug($"Total payments with configuration {index - 1}: {totalPayments1}");
             _logger.LogDebug($"Total payments with configuration {index}: {totalPayments2}");
 
-            _loans = (List<Loan>)(totalPayments1 < totalPayments2 ? ShallowCopy(loans1) : ShallowCopy(loans2));
+            if (totalPayments2 < totalPayments1)
+            {
+                _logger.LogDebug("Swapping order of indexes");
+            }
+
+            _loans = totalPayments1 < totalPayments2 ? ShallowCopy(loans1) : ShallowCopy(loans2);
         }
 
         private T ShallowCopy<T>(T item)
